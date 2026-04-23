@@ -259,6 +259,11 @@
     background: var(--accent-dim);
     border-color: var(--accent);
   }
+  .weapon-item.previewing {
+    background: var(--bg3);
+    border-color: var(--accent);
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
   .weapon-item.gamepass::after {
     content: 'GP';
     font-family: var(--font-mono);
@@ -1161,6 +1166,251 @@
   @media (max-width: 1100px) {
     .app { grid-template-columns: 260px 1fr 280px; }
   }
+
+  /* ── STAT PREVIEW PANEL ── */
+  .stat-preview-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    pointer-events: none;
+  }
+  .stat-preview-overlay.open {
+    display: block;
+    pointer-events: none;
+  }
+
+  .stat-preview {
+    position: absolute;
+    width: 280px;
+    background: var(--panel2);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,160,32,0.08);
+    overflow: hidden;
+    pointer-events: auto;
+    animation: previewSlideIn 0.18s cubic-bezier(0.2,0,0,1);
+  }
+  @keyframes previewSlideIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .sp-header {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+    position: relative;
+  }
+  .sp-category {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sp-category .sp-gp-badge {
+    background: var(--purple-dim);
+    color: var(--purple);
+    border: 1px solid var(--purple);
+    font-size: 8px;
+    padding: 0 4px;
+    letter-spacing: 1px;
+  }
+  .sp-name {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--text);
+    line-height: 1.1;
+  }
+  .sp-cmd {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 3px;
+  }
+  .sp-cmd span { color: var(--text2); }
+  .sp-close {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: none;
+    border: none;
+    color: var(--text3);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 6px;
+    transition: color 0.15s;
+  }
+  .sp-close:hover { color: var(--text); }
+
+  .sp-body {
+    padding: 14px 16px;
+  }
+
+  .sp-section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sp-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .sp-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .sp-bar-row {}
+  .sp-bar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .sp-bar-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+  .sp-bar-val {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .sp-bar-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sp-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .spb-amber { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .spb-blue  { background: linear-gradient(90deg, #2d6fc4, var(--blue)); }
+  .spb-green { background: linear-gradient(90deg, #27a054, var(--green)); }
+  .spb-red   { background: linear-gradient(90deg, #b02828, var(--red)); }
+  .spb-purple{ background: linear-gradient(90deg, #7c3aed, var(--purple)); }
+
+  .sp-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .sp-meta-cell {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 7px 10px;
+    border-radius: 2px;
+  }
+  .sp-meta-cell-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 2px;
+  }
+  .sp-meta-cell-val {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+  }
+
+  .sp-att-slots {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .sp-att-slot {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    border: 1px solid var(--border2);
+    color: var(--text3);
+    background: var(--bg3);
+  }
+  .sp-att-slot.available {
+    color: var(--accent);
+    border-color: rgba(232,160,32,0.4);
+    background: var(--accent-dim);
+  }
+
+  .sp-add-btn {
+    width: 100%;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: all 0.2s;
+    display: block;
+  }
+  .sp-add-btn:hover {
+    background: var(--accent2);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .sp-add-btn:disabled {
+    background: var(--border2);
+    color: var(--text3);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .sp-add-btn.already-added {
+    background: var(--green-dim);
+    color: var(--green);
+    border: 1px solid var(--green);
+    clip-path: none;
+  }
+
+  .sp-ammo-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    border: 1px solid var(--border2);
+    color: var(--text3);
+    background: var(--bg3);
+    margin-right: 4px;
+    margin-bottom: 4px;
+    display: inline-block;
+  }
+  .sp-ammo-wrap { margin-bottom: 12px; }
 </style>
 </head>
 <body>
@@ -1571,7 +1821,10 @@ function renderWeaponList() {
       </div>
       <button class="add-btn" onclick="addWeapon('${w.id}')" title="Add to loadout">+</button>
     `;
-    div.addEventListener('click', (e) => { if (!e.target.classList.contains('add-btn')) addWeapon(w.id); });
+    div.addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-btn')) { addWeapon(w.id); return; }
+      openStatPreview(w, div);
+    });
     el.appendChild(div);
   });
 }
@@ -2067,6 +2320,160 @@ function showToast(msg) {
 // ═══════════════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════
+//  STAT PREVIEW PANEL
+// ═══════════════════════════════════════════════════════
+let spCurrentWeapon = null;
+let spCurrentRow = null;
+
+const CAT_LABELS = {AR:'Assault Rifle',SMG:'Submachine Gun',SHG:'Shotgun',HG:'Pistol',SR:'Sniper Rifle',LMG:'Light Machine Gun',DMR:'Designated Marksman',PDW:'Personal Defense Weapon',MLW:'Melee'};
+const CAT_AMMO = {
+  AR: ['AP','LD','HV','FRG'],
+  SMG: ['SUB','JHP','+P','FRG'],
+  SHG: ['Pb','FRG','AP'],
+  HG: ['AP','JHP','+P','SUB'],
+  SR: ['AP','LD','HV'],
+  LMG: ['AP','LD','HV'],
+  DMR: ['AP','LD','HV','FRG'],
+  PDW: ['SUB','JHP','+P'],
+  MLW: [],
+};
+const CAT_SLOTS = {
+  AR:  ['Muzzle','Optic','Grip','Laser'],
+  SMG: ['Muzzle','Optic','Grip','Laser','Stock'],
+  SHG: ['Muzzle','Optic','Grip'],
+  HG:  ['Muzzle','Optic','Laser','Stock'],
+  SR:  ['Muzzle','Optic','Grip','Laser'],
+  LMG: ['Muzzle','Optic','Grip'],
+  DMR: ['Muzzle','Optic','Grip','Laser'],
+  PDW: ['Muzzle','Optic','Grip','Laser','Stock'],
+  MLW: [],
+};
+
+function openStatPreview(weapon, rowEl) {
+  spCurrentWeapon = weapon;
+
+  // Highlight the row
+  if (spCurrentRow) spCurrentRow.classList.remove('previewing');
+  spCurrentRow = rowEl;
+  rowEl.classList.add('previewing');
+
+  // Position the panel right of the left panel
+  const leftPanel = document.querySelector('.panel-left');
+  const rect = leftPanel.getBoundingClientRect();
+  const panel = document.getElementById('statPreview');
+  panel.style.left = (rect.right + 6) + 'px';
+  panel.style.top = Math.max(72, rowEl.getBoundingClientRect().top - 20) + 'px';
+
+  // Clamp to viewport
+  const vh = window.innerHeight;
+  const panelH = 520;
+  const top = parseFloat(panel.style.top);
+  if (top + panelH > vh - 8) panel.style.top = (vh - panelH - 8) + 'px';
+
+  // Fill data
+  const catLabel = CAT_LABELS[weapon.cat] || weapon.cat;
+  document.getElementById('spCat').innerHTML =
+    catLabel + (weapon.gamepass ? ' <span class="sp-gp-badge">GAMEPASS</span>' : '');
+  document.getElementById('spName').textContent = weapon.name;
+  document.getElementById('spCmd').innerHTML = 'CMD: <span>!' + 's ' + weapon.cmd + '</span>  ·  WT: <span>' + weapon.weight + '</span>';
+
+  // Bars
+  const bars = [
+    { label:'DAMAGE',      val: weapon.dmg,   cls:'spb-amber' },
+    { label:'RANGE',       val: weapon.range,  cls:'spb-blue'  },
+    { label:'MOBILITY',    val: weapon.mob,    cls:'spb-green' },
+    { label:'SUPPRESSION', val: weapon.sup,    cls:'spb-red'   },
+  ];
+  document.getElementById('spBars').innerHTML = bars.map(b => `
+    <div class="sp-bar-row">
+      <div class="sp-bar-top">
+        <span class="sp-bar-label">${b.label}</span>
+        <span class="sp-bar-val">${b.val}</span>
+      </div>
+      <div class="sp-bar-track">
+        <div class="sp-bar-fill ${b.cls}" style="width:0%"></div>
+      </div>
+    </div>
+  `).join('');
+  // Animate bars in next frame
+  requestAnimationFrame(() => {
+    document.querySelectorAll('#spBars .sp-bar-fill').forEach((el, i) => {
+      el.style.width = bars[i].val + '%';
+    });
+  });
+
+  // Meta grid
+  const fireRate = weapon.cat === 'SR' ? 'Bolt/Semi' : weapon.cat === 'SHG' ? 'Pump/Semi' : weapon.cat === 'MLW' ? '—' : weapon.cat === 'LMG' ? 'Full-Auto' : weapon.cat === 'DMR' ? 'Semi-Auto' : 'Full-Auto';
+  document.getElementById('spMeta').innerHTML = `
+    <div class="sp-meta-cell">
+      <div class="sp-meta-cell-label">Weight</div>
+      <div class="sp-meta-cell-val">${weapon.weight}</div>
+    </div>
+    <div class="sp-meta-cell">
+      <div class="sp-meta-cell-label">Class</div>
+      <div class="sp-meta-cell-val" style="font-size:13px">${weapon.cat}</div>
+    </div>
+    <div class="sp-meta-cell">
+      <div class="sp-meta-cell-label">Fire Mode</div>
+      <div class="sp-meta-cell-val" style="font-size:12px">${fireRate}</div>
+    </div>
+    <div class="sp-meta-cell">
+      <div class="sp-meta-cell-label">Dmg Score</div>
+      <div class="sp-meta-cell-val" style="color:var(--accent)">${weapon.dmg}</div>
+    </div>
+  `;
+
+  // Ammo types
+  const ammos = CAT_AMMO[weapon.cat] || [];
+  document.getElementById('spAmmo').innerHTML = ammos.length
+    ? ammos.map(a => `<span class="sp-ammo-tag">${a}</span>`).join('')
+    : '<span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">N/A</span>';
+
+  // Attachment slots
+  const slots = CAT_SLOTS[weapon.cat] || [];
+  document.getElementById('spAttSlots').innerHTML = slots.length
+    ? slots.map(s => `<span class="sp-att-slot available">${s}</span>`).join('')
+    : '<span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">No attachments</span>';
+
+  // Add button state
+  const btn = document.getElementById('spAddBtn');
+  const alreadyIn = state.loadout.some(e => e.weapon.id === weapon.id);
+  if (alreadyIn) {
+    btn.textContent = '✓ IN LOADOUT';
+    btn.className = 'sp-add-btn already-added';
+    btn.disabled = false;
+  } else {
+    btn.textContent = '+ ADD TO LOADOUT';
+    btn.className = 'sp-add-btn';
+    btn.disabled = false;
+  }
+
+  document.getElementById('spOverlay').classList.add('open');
+}
+
+function spAddCurrent() {
+  if (!spCurrentWeapon) return;
+  const alreadyIn = state.loadout.some(e => e.weapon.id === spCurrentWeapon.id);
+  if (alreadyIn) { closeStatPreview(); return; }
+  addWeapon(spCurrentWeapon.id);
+  // Update button state
+  const btn = document.getElementById('spAddBtn');
+  btn.textContent = '✓ IN LOADOUT';
+  btn.className = 'sp-add-btn already-added';
+}
+
+function closeStatPreview() {
+  document.getElementById('spOverlay').classList.remove('open');
+  if (spCurrentRow) { spCurrentRow.classList.remove('previewing'); spCurrentRow = null; }
+  spCurrentWeapon = null;
+}
+
+function handleSpOverlayClick(e) {
+  if (e.target === document.getElementById('spOverlay')) closeStatPreview();
+}
+
 function renderAll() {
   renderWeaponList();
   renderLoadout();
@@ -2078,5 +2485,28 @@ function renderAll() {
 
 renderAll();
 </script>
+
+<!-- Stat Preview Panel -->
+<div class="stat-preview-overlay" id="spOverlay" onclick="handleSpOverlayClick(event)">
+  <div class="stat-preview" id="statPreview">
+    <div class="sp-header">
+      <div class="sp-category" id="spCat"></div>
+      <div class="sp-name" id="spName"></div>
+      <div class="sp-cmd" id="spCmd"></div>
+      <button class="sp-close" onclick="closeStatPreview()">✕</button>
+    </div>
+    <div class="sp-body">
+      <div class="sp-section-label">PERFORMANCE</div>
+      <div class="sp-bars" id="spBars"></div>
+      <div class="sp-section-label">INFO</div>
+      <div class="sp-meta-grid" id="spMeta"></div>
+      <div class="sp-section-label">AMMO TYPES</div>
+      <div class="sp-ammo-wrap" id="spAmmo"></div>
+      <div class="sp-section-label">ATTACHMENT SLOTS</div>
+      <div class="sp-att-slots" id="spAttSlots"></div>
+      <button class="sp-add-btn" id="spAddBtn" onclick="spAddCurrent()"></button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
