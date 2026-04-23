@@ -264,18 +264,17 @@
     border-color: var(--accent);
     box-shadow: inset 3px 0 0 var(--accent);
   }
-  .weapon-item.gamepass::after {
-    content: 'GP';
+  .weapon-gp-badge {
     font-family: var(--font-mono);
     font-size: 8px;
     color: var(--purple);
     background: var(--purple-dim);
     border: 1px solid var(--purple);
-    padding: 1px 4px;
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
+    padding: 2px 5px;
+    flex-shrink: 0;
+    align-self: center;
+    letter-spacing: 1px;
+    pointer-events: none;
   }
 
   .weapon-icon {
@@ -1175,10 +1174,7 @@
     z-index: 150;
     pointer-events: none;
   }
-  .stat-preview-overlay.open {
-    display: block;
-    pointer-events: none;
-  }
+  .stat-preview-overlay.open { display: block; pointer-events: none; }
 
   .stat-preview {
     position: absolute;
@@ -1196,7 +1192,6 @@
     from { opacity: 0; transform: translateX(-12px); }
     to   { opacity: 1; transform: translateX(0); }
   }
-
   .sp-header {
     padding: 14px 16px 10px;
     border-bottom: 1px solid var(--border);
@@ -1230,187 +1225,49 @@
     color: var(--text);
     line-height: 1.1;
   }
-  .sp-cmd {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--text3);
-    margin-top: 3px;
-  }
+  .sp-cmd { font-family: var(--font-mono); font-size: 10px; color: var(--text3); margin-top: 3px; }
   .sp-cmd span { color: var(--text2); }
   .sp-close {
-    position: absolute;
-    top: 10px; right: 10px;
-    background: none;
-    border: none;
-    color: var(--text3);
-    font-size: 16px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 4px 6px;
-    transition: color 0.15s;
+    position: absolute; top: 10px; right: 10px;
+    background: none; border: none; color: var(--text3);
+    font-size: 16px; cursor: pointer; padding: 4px 6px; transition: color 0.15s;
   }
   .sp-close:hover { color: var(--text); }
-
-  .sp-body {
-    padding: 14px 16px;
-  }
-
+  .sp-body { padding: 14px 16px; }
   .sp-section-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--text3); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
   }
-  .sp-section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .sp-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-  .sp-bar-row {}
-  .sp-bar-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 4px;
-  }
-  .sp-bar-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text3);
-  }
-  .sp-bar-val {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text2);
-  }
-  .sp-bar-track {
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .sp-bar-fill {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
-  }
+  .sp-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .sp-bars { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .sp-bar-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .sp-bar-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
+  .sp-bar-val { font-family: var(--font-mono); font-size: 11px; color: var(--text2); }
+  .sp-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .sp-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
   .spb-amber { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
   .spb-blue  { background: linear-gradient(90deg, #2d6fc4, var(--blue)); }
   .spb-green { background: linear-gradient(90deg, #27a054, var(--green)); }
-  .spb-red   { background: linear-gradient(90deg, #b02828, var(--red)); }
   .spb-purple{ background: linear-gradient(90deg, #7c3aed, var(--purple)); }
-
-  .sp-meta-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-  .sp-meta-cell {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 7px 10px;
-    border-radius: 2px;
-  }
-  .sp-meta-cell-label {
-    font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 2px;
-  }
-  .sp-meta-cell-val {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--text);
-  }
-
-  .sp-att-slots {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    margin-bottom: 14px;
-  }
-  .sp-att-slot {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-    border: 1px solid var(--border2);
-    color: var(--text3);
-    background: var(--bg3);
-  }
-  .sp-att-slot.available {
-    color: var(--accent);
-    border-color: rgba(232,160,32,0.4);
-    background: var(--accent-dim);
-  }
-
-  .sp-add-btn {
-    width: 100%;
-    font-family: var(--font-head);
-    font-weight: 800;
-    font-size: 15px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    background: var(--accent);
-    color: #000;
-    border: none;
-    padding: 12px;
-    cursor: pointer;
-    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-    transition: all 0.2s;
-    display: block;
-  }
-  .sp-add-btn:hover {
-    background: var(--accent2);
-    box-shadow: 0 0 20px var(--accent-glow);
-  }
-  .sp-add-btn:disabled {
-    background: var(--border2);
-    color: var(--text3);
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  .sp-add-btn.already-added {
-    background: var(--green-dim);
-    color: var(--green);
-    border: 1px solid var(--green);
-    clip-path: none;
-  }
-
-  .sp-ammo-tag {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    padding: 2px 7px;
-    border-radius: 2px;
-    border: 1px solid var(--border2);
-    color: var(--text3);
-    background: var(--bg3);
-    margin-right: 4px;
-    margin-bottom: 4px;
-    display: inline-block;
-  }
+  .sp-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+  .sp-meta-cell { background: var(--bg3); border: 1px solid var(--border); padding: 7px 10px; border-radius: 2px; }
+  .sp-meta-cell-label { font-family: var(--font-mono); font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 2px; }
+  .sp-meta-cell-val { font-family: var(--font-head); font-weight: 700; font-size: 16px; color: var(--text); }
+  .sp-att-slots { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 14px; }
+  .sp-att-slot { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; border: 1px solid var(--border2); color: var(--text3); background: var(--bg3); }
+  .sp-att-slot.available { color: var(--accent); border-color: rgba(232,160,32,0.4); background: var(--accent-dim); }
   .sp-ammo-wrap { margin-bottom: 12px; }
+  .sp-ammo-tag { font-family: var(--font-mono); font-size: 9px; padding: 2px 7px; border-radius: 2px; border: 1px solid var(--border2); color: var(--text3); background: var(--bg3); margin-right: 4px; margin-bottom: 4px; display: inline-block; }
+  .sp-add-btn {
+    width: 100%; font-family: var(--font-head); font-weight: 800; font-size: 15px;
+    letter-spacing: 3px; text-transform: uppercase; background: var(--accent); color: #000;
+    border: none; padding: 12px; cursor: pointer;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: all 0.2s; display: block;
+  }
+  .sp-add-btn:hover { background: var(--accent2); box-shadow: 0 0 20px var(--accent-glow); }
+  .sp-add-btn.already-added { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); clip-path: none; }
 </style>
 </head>
 <body>
@@ -1530,7 +1387,7 @@
           <div class="stat-bar-track"><div class="stat-bar-fill bar-blue" id="bar-range" style="width:0%"></div></div>
         </div>
         <div class="stat-bar-row">
-          <div class="stat-bar-label"><span>FIREPOWER</span><span id="bar-dmg-val">—</span></div>
+          <div class="stat-bar-label"><span>DAMAGE</span><span id="bar-dmg-val">—</span></div>
           <div class="stat-bar-track"><div class="stat-bar-fill" id="bar-dmg" style="width:0%"></div></div>
         </div>
         <div class="stat-bar-row">
@@ -1538,8 +1395,8 @@
           <div class="stat-bar-track"><div class="stat-bar-fill bar-green" id="bar-mob" style="width:0%"></div></div>
         </div>
         <div class="stat-bar-row" style="border-bottom:none;">
-          <div class="stat-bar-label"><span>SUPPRESSION</span><span id="bar-sup-val">—</span></div>
-          <div class="stat-bar-track"><div class="stat-bar-fill bar-red" id="bar-sup" style="width:0%"></div></div>
+          <div class="stat-bar-label"><span>ACCURACY</span><span id="bar-acc-val">—</span></div>
+          <div class="stat-bar-track"><div class="stat-bar-fill bar-green" id="bar-acc" style="width:0%"></div></div>
         </div>
       </div>
     </div>
@@ -1577,94 +1434,94 @@
 
 const WEAPONS = [
   // Assault Rifles
-  { id:'ak47', name:'AK-47', cat:'AR', cmd:'ak47', weight:8, emoji:'🔫', dmg:35, range:70, mob:65, sup:50 },
-  { id:'ak15', name:'AK-15', cat:'AR', cmd:'ak15', weight:9, emoji:'🔫', dmg:40, range:75, mob:60, sup:55 },
-  { id:'m4', name:'M4 Carbine', cat:'AR', cmd:'m4', weight:7, emoji:'🔫', dmg:30, range:65, mob:70, sup:55 },
-  { id:'m16', name:'M16A2', cat:'AR', cmd:'m16', weight:8, emoji:'🔫', dmg:33, range:72, mob:62, sup:50 },
-  { id:'hk416', name:'HK416', cat:'AR', cmd:'hk416', weight:8, emoji:'🔫', dmg:33, range:68, mob:65, sup:55 },
-  { id:'aug', name:'AUG A3', cat:'AR', cmd:'aug', weight:9, emoji:'🔫', dmg:33, range:70, mob:62, sup:50 },
-  { id:'famas', name:'FAMAS G2', cat:'AR', cmd:'famas', weight:8, emoji:'🔫', dmg:30, range:65, mob:68, sup:60 },
-  { id:'g36c', name:'G36C', cat:'AR', cmd:'g36c', weight:8, emoji:'🔫', dmg:32, range:66, mob:68, sup:52 },
-  { id:'qbz', name:'QBZ-95', cat:'AR', cmd:'qbz', weight:8, emoji:'🔫', dmg:33, range:68, mob:65, sup:50 },
-  { id:'sg552', name:'SG-552', cat:'AR', cmd:'sg552', weight:9, emoji:'🔫', dmg:35, range:66, mob:62, sup:55 },
-  { id:'mcx', name:'MCX LVAW', cat:'AR', cmd:'mcx', weight:7, emoji:'🔫', dmg:28, range:60, mob:75, sup:65 },
-  { id:'sopmod', name:'SOPMOD Block 11', cat:'AR', cmd:'sop', weight:7, emoji:'🔫', dmg:30, range:62, mob:72, sup:55 },
-  { id:'asval', name:'AS VAL', cat:'AR', cmd:'asval', weight:9, emoji:'🔫', dmg:40, range:55, mob:65, sup:90 },
-  { id:'groza', name:'Groza-4', cat:'AR', cmd:'groza', weight:8, emoji:'🔫', dmg:35, range:58, mob:70, sup:70, gamepass:true },
-  { id:'honey', name:'Honey Badger', cat:'PDW', cmd:'hon', weight:6, emoji:'🔫', dmg:28, range:55, mob:80, sup:75 },
+  { id:'ak47', name:'AK-47', cat:'AR', cmd:'ak47', weight:8, emoji:'🔫', dmg:35, range:50, mob:77, acc:73 },
+  { id:'ak15', name:'AK-15', cat:'AR', cmd:'ak15', weight:9, emoji:'🔫', dmg:36, range:54, mob:74, acc:73 },
+  { id:'m4', name:'M4 Carbine', cat:'AR', cmd:'m4', weight:8, emoji:'🔫', dmg:33, range:50, mob:77, acc:75 },
+  { id:'m16', name:'M16A2', cat:'AR', cmd:'m16', weight:8, emoji:'🔫', dmg:35, range:50, mob:77, acc:75 },
+  { id:'hk416', name:'HK416', cat:'AR', cmd:'hk416', weight:9, emoji:'🔫', dmg:33, range:50, mob:74, acc:73 },
+  { id:'aug', name:'AUG A3', cat:'AR', cmd:'aug', weight:9, emoji:'🔫', dmg:33, range:50, mob:74, acc:71 },
+  { id:'famas', name:'FAMAS G2', cat:'AR', cmd:'famas', weight:8, emoji:'🔫', dmg:32, range:46, mob:77, acc:72 },
+  { id:'g36c', name:'G36C', cat:'AR', cmd:'g36c', weight:8, emoji:'🔫', dmg:33, range:46, mob:77, acc:72 },
+  { id:'qbz', name:'QBZ-95', cat:'AR', cmd:'qbz', weight:8, emoji:'🔫', dmg:33, range:50, mob:77, acc:72 },
+  { id:'sg552', name:'SG-552', cat:'AR', cmd:'sg552', weight:9, emoji:'🔫', dmg:35, range:46, mob:74, acc:72 },
+  { id:'mcx', name:'MCX LVAW', cat:'AR', cmd:'mcx', weight:8, emoji:'🔫', dmg:30, range:39, mob:77, acc:71 },
+  { id:'sopmod', name:'SOPMOD Block 11', cat:'AR', cmd:'sop', weight:8, emoji:'🔫', dmg:33, range:50, mob:77, acc:75 },
+  { id:'asval', name:'AS VAL', cat:'AR', cmd:'asval', weight:9, emoji:'🔫', dmg:40, range:29, mob:74, acc:76 },
+  { id:'groza', name:'Groza-4', cat:'AR', cmd:'groza', weight:8, emoji:'🔫', dmg:35, range:39, mob:77, acc:72, gamepass:true },
+  { id:'honey', name:'Honey Badger', cat:'PDW', cmd:'hon', weight:6, emoji:'🔫', dmg:28, range:36, mob:83, acc:71 },
   // SMG
-  { id:'mp5a2', name:'MP5A2', cat:'SMG', cmd:'mp5a2', weight:5, emoji:'🔫', dmg:25, range:45, mob:85, sup:65 },
-  { id:'mp5k', name:'MP5K', cat:'SMG', cmd:'mp5k', weight:4, emoji:'🔫', dmg:24, range:40, mob:90, sup:60 },
-  { id:'mp7', name:'MP7', cat:'SMG', cmd:'mp7', weight:4, emoji:'🔫', dmg:22, range:45, mob:92, sup:65 },
-  { id:'mpx', name:'MPX', cat:'SMG', cmd:'mpx', weight:5, emoji:'🔫', dmg:24, range:47, mob:88, sup:68 },
-  { id:'ump', name:'UMP-45', cat:'SMG', cmd:'ump', weight:5, emoji:'🔫', dmg:30, range:42, mob:82, sup:55 },
-  { id:'p90', name:'P90', cat:'SMG', cmd:'p90', weight:5, emoji:'🔫', dmg:22, range:48, mob:88, sup:68 },
-  { id:'uzi', name:'Uzi', cat:'SMG', cmd:'uzi', weight:4, emoji:'🔫', dmg:22, range:38, mob:88, sup:70 },
-  { id:'mp40', name:'MP40', cat:'SMG', cmd:'mp40', weight:5, emoji:'🔫', dmg:30, range:35, mob:80, sup:45 },
-  { id:'ppsh', name:'PPSH-41', cat:'SMG', cmd:'ppsh', weight:6, emoji:'🔫', dmg:22, range:40, mob:78, sup:80 },
-  { id:'sr2m', name:'SR-2M', cat:'SMG', cmd:'sr2m', weight:4, emoji:'🔫', dmg:25, range:44, mob:90, sup:62 },
-  { id:'vector', name:'KRISS Vector', cat:'SMG', cmd:'vector', weight:5, emoji:'🔫', dmg:23, range:40, mob:86, sup:70, gamepass:true },
-  { id:'thompson', name:'M1921 Thompson', cat:'SMG', cmd:'thompson', weight:7, emoji:'🔫', dmg:32, range:38, mob:70, sup:75, gamepass:true },
-  { id:'evo', name:'Scorpion EVO', cat:'SMG', cmd:'evo', weight:4, emoji:'🔫', dmg:21, range:43, mob:92, sup:68, gamepass:true },
+  { id:'mp5a2', name:'MP5A2', cat:'SMG', cmd:'mp5a2', weight:5, emoji:'🔫', dmg:14, range:32, mob:86, acc:73 },
+  { id:'mp5k', name:'MP5K', cat:'SMG', cmd:'mp5k', weight:4, emoji:'🔫', dmg:18, range:32, mob:89, acc:54 },
+  { id:'mp7', name:'MP7', cat:'SMG', cmd:'mp7', weight:4, emoji:'🔫', dmg:29, range:36, mob:89, acc:72 },
+  { id:'mpx', name:'MPX', cat:'SMG', cmd:'mpx', weight:5, emoji:'🔫', dmg:20, range:32, mob:86, acc:72 },
+  { id:'ump', name:'UMP-45', cat:'SMG', cmd:'ump', weight:6, emoji:'🔫', dmg:25, range:39, mob:83, acc:71 },
+  { id:'p90', name:'P90', cat:'SMG', cmd:'p90', weight:5, emoji:'🔫', dmg:22, range:36, mob:86, acc:70 },
+  { id:'uzi', name:'Uzi', cat:'SMG', cmd:'uzi', weight:4, emoji:'🔫', dmg:25, range:29, mob:89, acc:69 },
+  { id:'mp40', name:'MP40', cat:'SMG', cmd:'mp40', weight:8, emoji:'🔫', dmg:20, range:32, mob:77, acc:69 },
+  { id:'ppsh', name:'PPSH-41', cat:'SMG', cmd:'ppsh', weight:6, emoji:'🔫', dmg:22, range:29, mob:83, acc:68 },
+  { id:'sr2m', name:'SR-2M', cat:'SMG', cmd:'sr2m', weight:4, emoji:'🔫', dmg:24, range:32, mob:89, acc:71 },
+  { id:'vector', name:'KRISS Vector', cat:'SMG', cmd:'vector', weight:5, emoji:'🔫', dmg:24, range:29, mob:86, acc:70, gamepass:true },
+  { id:'thompson', name:'M1921 Thompson', cat:'SMG', cmd:'thompson', weight:7, emoji:'🔫', dmg:32, range:32, mob:80, acc:69, gamepass:true },
+  { id:'evo', name:'Scorpion EVO', cat:'SMG', cmd:'evo', weight:4, emoji:'🔫', dmg:21, range:32, mob:89, acc:71, gamepass:true },
   // Shotguns
-  { id:'rem870', name:'Remington 870', cat:'SHG', cmd:'rem', weight:7, emoji:'🔫', dmg:70, range:20, mob:65, sup:55 },
-  { id:'pipeshg', name:'Pipe Shotgun', cat:'SHG', cmd:'pipe', weight:5, emoji:'🔫', dmg:60, range:18, mob:72, sup:40 },
-  { id:'double', name:'Double Barrel', cat:'SHG', cmd:'dou', weight:6, emoji:'🔫', dmg:80, range:18, mob:70, sup:50, gamepass:true },
-  { id:'ithaca', name:'Ithaca 37', cat:'SHG', cmd:'ithaca', weight:7, emoji:'🔫', dmg:72, range:20, mob:65, sup:52, gamepass:true },
-  { id:'stake', name:'Stakeout', cat:'SHG', cmd:'stake', weight:8, emoji:'🔫', dmg:68, range:22, mob:62, sup:58, gamepass:true },
-  { id:'spas', name:'SPAS-12', cat:'SHG', cmd:'spas', weight:9, emoji:'🔫', dmg:75, range:22, mob:58, sup:60, gamepass:true },
-  { id:'saiga', name:'Saiga 12K', cat:'SHG', cmd:'saiga', weight:8, emoji:'🔫', dmg:65, range:22, mob:62, sup:70, gamepass:true },
-  { id:'uts15', name:'UTS-15', cat:'SHG', cmd:'uts15', weight:8, emoji:'🔫', dmg:68, range:22, mob:62, sup:65, gamepass:true },
-  { id:'m26', name:'M26 MASS', cat:'SHG', cmd:'m26', weight:5, emoji:'🔫', dmg:60, range:18, mob:80, sup:48, gamepass:true },
-  { id:'olympia', name:'Olympia', cat:'SHG', cmd:'olympia', weight:6, emoji:'🔫', dmg:75, range:18, mob:68, sup:42, gamepass:true },
+  { id:'rem870', name:'Remington 870', cat:'SHG', cmd:'rem', weight:7, emoji:'🔫', dmg:20, range:14, mob:80, acc:58 },
+  { id:'pipeshg', name:'Pipe Shotgun', cat:'SHG', cmd:'pipe', weight:5, emoji:'🔫', dmg:16, range:11, mob:86, acc:54 },
+  { id:'double', name:'Double Barrel', cat:'SHG', cmd:'dou', weight:6, emoji:'🔫', dmg:25, range:11, mob:83, acc:55, gamepass:true },
+  { id:'ithaca', name:'Ithaca 37', cat:'SHG', cmd:'ithaca', weight:7, emoji:'🔫', dmg:22, range:13, mob:80, acc:57, gamepass:true },
+  { id:'stake', name:'Stakeout', cat:'SHG', cmd:'stake', weight:8, emoji:'🔫', dmg:22, range:14, mob:77, acc:57, gamepass:true },
+  { id:'spas', name:'SPAS-12', cat:'SHG', cmd:'spas', weight:9, emoji:'🔫', dmg:25, range:14, mob:74, acc:58, gamepass:true },
+  { id:'saiga', name:'Saiga 12K', cat:'SHG', cmd:'saiga', weight:8, emoji:'🔫', dmg:20, range:14, mob:77, acc:57, gamepass:true },
+  { id:'uts15', name:'UTS-15', cat:'SHG', cmd:'uts15', weight:8, emoji:'🔫', dmg:22, range:14, mob:77, acc:57, gamepass:true },
+  { id:'m26', name:'M26 MASS', cat:'SHG', cmd:'m26', weight:5, emoji:'🔫', dmg:18, range:11, mob:86, acc:55, gamepass:true },
+  { id:'olympia', name:'Olympia', cat:'SHG', cmd:'olympia', weight:6, emoji:'🔫', dmg:25, range:11, mob:83, acc:55, gamepass:true },
   // Pistols
-  { id:'glock', name:'Glock 19X', cat:'HG', cmd:'glock', weight:2, emoji:'🔫', dmg:22, range:30, mob:95, sup:35 },
-  { id:'m1911', name:'M1911', cat:'HG', cmd:'m1911', weight:2, emoji:'🔫', dmg:26, range:30, mob:95, sup:30 },
-  { id:'m9', name:'M9', cat:'HG', cmd:'m9', weight:2, emoji:'🔫', dmg:22, range:32, mob:95, sup:35 },
-  { id:'p226', name:'P226', cat:'HG', cmd:'p226', weight:2, emoji:'🔫', dmg:23, range:32, mob:95, sup:35 },
-  { id:'cz75', name:'CZ-75', cat:'HG', cmd:'cz75', weight:2, emoji:'🔫', dmg:22, range:30, mob:95, sup:38 },
-  { id:'deagle', name:'Desert Eagle', cat:'HG', cmd:'deagle', weight:3, emoji:'🔫', dmg:42, range:38, mob:88, sup:25 },
-  { id:'fiveseven', name:'Five SeveN', cat:'HG', cmd:'fiveseven', weight:2, emoji:'🔫', dmg:24, range:34, mob:95, sup:32 },
-  { id:'mp443', name:'MP443', cat:'HG', cmd:'mp443', weight:2, emoji:'🔫', dmg:22, range:30, mob:95, sup:35 },
-  { id:'uspmatch', name:'USP Match', cat:'HG', cmd:'uspmatch', weight:2, emoji:'🔫', dmg:24, range:32, mob:95, sup:35 },
-  { id:'usp23', name:'USP MK23', cat:'HG', cmd:'uspmk23', weight:3, emoji:'🔫', dmg:28, range:34, mob:90, sup:40 },
-  { id:'steyr', name:'Steyr Elite', cat:'HG', cmd:'steyr', weight:2, emoji:'🔫', dmg:22, range:30, mob:95, sup:35 },
-  { id:'makarov', name:'Makarov', cat:'HG', cmd:'makarov', weight:2, emoji:'🔫', dmg:20, range:28, mob:96, sup:32 },
-  { id:'luger', name:'Luger P08', cat:'HG', cmd:'luger', weight:2, emoji:'🔫', dmg:22, range:30, mob:95, sup:30, gamepass:true },
-  { id:'unica', name:'UNICA 6', cat:'HG', cmd:'unica', weight:3, emoji:'🔫', dmg:35, range:35, mob:90, sup:28, gamepass:true },
+  { id:'glock', name:'Glock 19X', cat:'HG', cmd:'glock', weight:2, emoji:'🔫', dmg:22, range:25, mob:94, acc:68 },
+  { id:'m1911', name:'M1911', cat:'HG', cmd:'m1911', weight:2, emoji:'🔫', dmg:28, range:25, mob:94, acc:69 },
+  { id:'m9', name:'M9', cat:'HG', cmd:'m9', weight:2, emoji:'🔫', dmg:22, range:25, mob:94, acc:68 },
+  { id:'p226', name:'P226', cat:'HG', cmd:'p226', weight:2, emoji:'🔫', dmg:23, range:25, mob:94, acc:68 },
+  { id:'cz75', name:'CZ-75', cat:'HG', cmd:'cz75', weight:2, emoji:'🔫', dmg:22, range:25, mob:94, acc:68 },
+  { id:'deagle', name:'Desert Eagle', cat:'HG', cmd:'deagle', weight:3, emoji:'🔫', dmg:42, range:32, mob:91, acc:70 },
+  { id:'fiveseven', name:'Five SeveN', cat:'HG', cmd:'fiveseven', weight:2, emoji:'🔫', dmg:24, range:29, mob:94, acc:69 },
+  { id:'mp443', name:'MP443', cat:'HG', cmd:'mp443', weight:2, emoji:'🔫', dmg:22, range:25, mob:94, acc:68 },
+  { id:'uspmatch', name:'USP Match', cat:'HG', cmd:'uspmatch', weight:2, emoji:'🔫', dmg:24, range:29, mob:94, acc:69 },
+  { id:'usp23', name:'USP MK23', cat:'HG', cmd:'uspmk23', weight:3, emoji:'🔫', dmg:28, range:29, mob:91, acc:70 },
+  { id:'steyr', name:'Steyr Elite', cat:'HG', cmd:'steyr', weight:2, emoji:'🔫', dmg:22, range:25, mob:94, acc:68 },
+  { id:'makarov', name:'Makarov', cat:'HG', cmd:'makarov', weight:2, emoji:'🔫', dmg:20, range:21, mob:94, acc:66 },
+  { id:'luger', name:'Luger P08', cat:'HG', cmd:'luger', weight:2, emoji:'🔫', dmg:22, range:25, mob:94, acc:68, gamepass:true },
+  { id:'unica', name:'UNICA 6', cat:'HG', cmd:'unica', weight:3, emoji:'🔫', dmg:35, range:29, mob:91, acc:69, gamepass:true },
   // Snipers
-  { id:'l96', name:'L96A1', cat:'SR', cmd:'l96', weight:10, emoji:'🎯', dmg:80, range:100, mob:45, sup:30 },
-  { id:'cheytac', name:'CheyTac M200', cat:'SR', cmd:'chey', weight:12, emoji:'🎯', dmg:95, range:100, mob:35, sup:25 },
-  { id:'dragunov', name:'Dragunov SVD', cat:'SR', cmd:'dr', weight:9, emoji:'🎯', dmg:65, range:88, mob:52, sup:35 },
-  { id:'jng90', name:'JNG-90', cat:'SR', cmd:'jng', weight:10, emoji:'🎯', dmg:80, range:95, mob:42, sup:28 },
-  { id:'barrett', name:'Barrett M82A3', cat:'SR', cmd:'bar', weight:15, emoji:'🎯', dmg:100, range:100, mob:25, sup:30, gamepass:true },
-  { id:'walther', name:'Walther WA2000', cat:'SR', cmd:'walt', weight:11, emoji:'🎯', dmg:80, range:96, mob:40, sup:30, gamepass:true },
-  { id:'scarh', name:'SCAR-H', cat:'SR', cmd:'scarh', weight:9, emoji:'🎯', dmg:55, range:80, mob:55, sup:40, gamepass:true },
+  { id:'l96', name:'L96A1', cat:'SR', cmd:'l96', weight:10, emoji:'🎯', dmg:75, range:86, mob:71, acc:97 },
+  { id:'cheytac', name:'CheyTac M200', cat:'SR', cmd:'chey', weight:30, emoji:'🎯', dmg:75, range:86, mob:14, acc:97 },
+  { id:'dragunov', name:'Dragunov SVD', cat:'SR', cmd:'dr', weight:10, emoji:'🎯', dmg:70, range:86, mob:71, acc:90 },
+  { id:'jng90', name:'JNG-90', cat:'SR', cmd:'jng', weight:10, emoji:'🎯', dmg:40, range:86, mob:71, acc:97 },
+  { id:'barrett', name:'Barrett M82A3', cat:'SR', cmd:'bar', weight:20, emoji:'🎯', dmg:90, range:100, mob:43, acc:100, gamepass:true },
+  { id:'walther', name:'Walther WA2000', cat:'SR', cmd:'walt', weight:12, emoji:'🎯', dmg:75, range:86, mob:66, acc:97, gamepass:true },
+  { id:'scarh', name:'SCAR-H', cat:'SR', cmd:'scarh', weight:10, emoji:'🎯', dmg:45, range:71, mob:71, acc:83, gamepass:true },
   // LMG
-  { id:'mg4', name:'MG4', cat:'LMG', cmd:'mg4', weight:12, emoji:'🔫', dmg:32, range:75, mob:38, sup:90 },
-  { id:'rpk', name:'RPK', cat:'LMG', cmd:'rpk', weight:10, emoji:'🔫', dmg:35, range:75, mob:42, sup:85 },
-  { id:'rpk74', name:'RPK-74', cat:'LMG', cmd:'rpk74', weight:10, emoji:'🔫', dmg:33, range:78, mob:42, sup:85 },
-  { id:'lewis', name:'Lewis Automatic Rifle', cat:'LMG', cmd:'lewis', weight:12, emoji:'🔫', dmg:40, range:70, mob:35, sup:80 },
+  { id:'mg4', name:'MG4', cat:'LMG', cmd:'mg4', weight:32, emoji:'🔫', dmg:33, range:57, mob:9, acc:64 },
+  { id:'rpk', name:'RPK', cat:'LMG', cmd:'rpk', weight:12, emoji:'🔫', dmg:35, range:57, mob:66, acc:75 },
+  { id:'rpk74', name:'RPK-74', cat:'LMG', cmd:'rpk74', weight:12, emoji:'🔫', dmg:35, range:57, mob:66, acc:75 },
+  { id:'lewis', name:'Lewis Automatic Rifle', cat:'LMG', cmd:'lewis', weight:30, emoji:'🔫', dmg:30, range:57, mob:14, acc:58 },
   // DMR
-  { id:'sks', name:'SKS', cat:'DMR', cmd:'sks', weight:7, emoji:'🎯', dmg:45, range:82, mob:62, sup:38 },
-  { id:'ar10', name:'AR-10', cat:'DMR', cmd:'ar10', weight:8, emoji:'🎯', dmg:45, range:80, mob:58, sup:40 },
-  { id:'mk11', name:'MK 17 CQC', cat:'DMR', cmd:'mk17', weight:8, emoji:'🎯', dmg:45, range:78, mob:60, sup:40 },
-  { id:'rfb', name:'RFB', cat:'DMR', cmd:'rfb', weight:8, emoji:'🎯', dmg:48, range:82, mob:56, sup:38 },
-  { id:'qbu', name:'QBU-88', cat:'DMR', cmd:'qbu', weight:8, emoji:'🎯', dmg:46, range:80, mob:58, sup:36 },
-  { id:'mk11d', name:'MK-11', cat:'DMR', cmd:'mk11', weight:8, emoji:'🎯', dmg:46, range:80, mob:58, sup:38 },
-  { id:'fnfal', name:'FN FAL', cat:'DMR', cmd:'fal', weight:9, emoji:'🎯', dmg:50, range:82, mob:55, sup:38, gamepass:true },
-  { id:'g3a3', name:'G3A3', cat:'DMR', cmd:'g3a3', weight:9, emoji:'🎯', dmg:48, range:80, mob:55, sup:38 },
-  { id:'l85', name:'L85A2', cat:'DMR', cmd:'l85', weight:9, emoji:'🎯', dmg:45, range:78, mob:58, sup:40 },
+  { id:'sks', name:'SKS', cat:'DMR', cmd:'sks', weight:7, emoji:'🎯', dmg:40, range:57, mob:80, acc:78 },
+  { id:'ar10', name:'AR-10', cat:'DMR', cmd:'ar10', weight:8, emoji:'🎯', dmg:45, range:64, mob:77, acc:80 },
+  { id:'mk11', name:'MK 17 CQC', cat:'DMR', cmd:'mk17', weight:8, emoji:'🎯', dmg:45, range:64, mob:77, acc:80 },
+  { id:'rfb', name:'RFB', cat:'DMR', cmd:'rfb', weight:10, emoji:'🎯', dmg:45, range:71, mob:71, acc:81 },
+  { id:'qbu', name:'QBU-88', cat:'DMR', cmd:'qbu', weight:8, emoji:'🎯', dmg:44, range:64, mob:77, acc:79 },
+  { id:'mk11d', name:'MK-11', cat:'DMR', cmd:'mk11', weight:8, emoji:'🎯', dmg:45, range:64, mob:77, acc:80 },
+  { id:'fnfal', name:'FN FAL', cat:'DMR', cmd:'fal', weight:9, emoji:'🎯', dmg:50, range:64, mob:74, acc:80, gamepass:true },
+  { id:'g3a3', name:'G3A3', cat:'DMR', cmd:'g3a3', weight:12, emoji:'🎯', dmg:40, range:57, mob:66, acc:71 },
+  { id:'l85', name:'L85A2', cat:'DMR', cmd:'l85', weight:9, emoji:'🎯', dmg:33, range:50, mob:74, acc:73 },
   // PDW
-  { id:'mac10', name:'MAC-10', cat:'PDW', cmd:'mac', weight:4, emoji:'🔫', dmg:24, range:35, mob:90, sup:62 },
-  { id:'tmp', name:'TMP', cat:'PDW', cmd:'tmp', weight:3, emoji:'🔫', dmg:20, range:38, mob:94, sup:60 },
-  { id:'pp2000', name:'PP2000', cat:'PDW', cmd:'pp2000', weight:3, emoji:'🔫', dmg:22, range:40, mob:92, sup:62, gamepass:true },
+  { id:'mac10', name:'MAC-10', cat:'PDW', cmd:'mac', weight:4, emoji:'🔫', dmg:20, range:36, mob:89, acc:49 },
+  { id:'tmp', name:'TMP', cat:'PDW', cmd:'tmp', weight:3, emoji:'🔫', dmg:18, range:29, mob:91, acc:64 },
+  { id:'pp2000', name:'PP2000', cat:'PDW', cmd:'pp2000', weight:3, emoji:'🔫', dmg:22, range:32, mob:91, acc:66, gamepass:true },
   // Melee
-  { id:'shovel', name:'Shovel', cat:'MLW', cmd:'shovel', weight:2, emoji:'🪓', dmg:50, range:5, mob:95, sup:30, gamepass:true },
-  { id:'axe', name:'Fire Axe', cat:'MLW', cmd:'fireaxe', weight:3, emoji:'🪓', dmg:60, range:5, mob:90, sup:35 },
-  { id:'hammer', name:'Hammer', cat:'MLW', cmd:'hammer', weight:2, emoji:'🪓', dmg:45, range:5, mob:95, sup:28 },
-  { id:'pickaxe', name:'Pickaxe', cat:'MLW', cmd:'pickaxe', weight:3, emoji:'🪓', dmg:55, range:5, mob:90, sup:32 },
-  { id:'wrench', name:'Wrench', cat:'MLW', cmd:'wre', weight:2, emoji:'🔧', dmg:30, range:5, mob:95, sup:20, note:'Repairs armor' },
+  { id:'shovel', name:'Shovel', cat:'MLW', cmd:'shovel', weight:2, emoji:'🪓', dmg:50, range:1, mob:94, acc:0, gamepass:true },
+  { id:'axe', name:'Fire Axe', cat:'MLW', cmd:'fireaxe', weight:3, emoji:'🪓', dmg:60, range:1, mob:91, acc:0 },
+  { id:'hammer', name:'Hammer', cat:'MLW', cmd:'hammer', weight:2, emoji:'🪓', dmg:45, range:1, mob:94, acc:0 },
+  { id:'pickaxe', name:'Pickaxe', cat:'MLW', cmd:'pickaxe', weight:3, emoji:'🪓', dmg:55, range:1, mob:91, acc:0 },
+  { id:'wrench', name:'Wrench', cat:'MLW', cmd:'wre', weight:2, emoji:'🔧', dmg:30, range:1, mob:94, acc:0 },
 ];
 
 const ATTACHMENTS = {
@@ -1812,14 +1669,15 @@ function renderWeaponList() {
   list.forEach(w => {
     const inLoadout = state.loadout.some(l => l.weapon.id === w.id);
     const div = document.createElement('div');
-    div.className = 'weapon-item' + (inLoadout ? ' selected' : '') + (w.gamepass ? ' gamepass' : '');
+    div.className = 'weapon-item' + (inLoadout ? ' selected' : '');
     div.innerHTML = `
       <div class="weapon-icon">${w.emoji}</div>
       <div class="weapon-info">
         <div class="weapon-name">${w.name}</div>
         <div class="weapon-meta">${catLabel(w.cat)} · WT:${w.weight}</div>
       </div>
-      <button class="add-btn" onclick="addWeapon('${w.id}')" title="Add to loadout">+</button>
+      ${w.gamepass ? '<span class="weapon-gp-badge">GP</span>' : ''}
+      <button class="add-btn" title="Add to loadout">+</button>
     `;
     div.addEventListener('click', (e) => {
       if (e.target.classList.contains('add-btn')) { addWeapon(w.id); return; }
@@ -2058,15 +1916,15 @@ function updateCommand() {
 
 function updateStats() {
   if (!state.loadout.length) {
-    ['range','dmg','mob','sup'].forEach(k => {
+    ['range','dmg','mob','acc'].forEach(k => {
       document.getElementById('bar-'+k).style.width = '0%';
       document.getElementById('bar-'+k+'-val').textContent = '—';
     });
     return;
   }
-  const avg = (key) => Math.round(state.loadout.reduce((s,e) => s + e.weapon[key], 0) / state.loadout.length);
-  const r = avg('range'), d = avg('dmg'), m = avg('mob'), su = avg('sup');
-  [['range',r],['dmg',d],['mob',m],['sup',su]].forEach(([k,v]) => {
+  const avg = (key) => Math.round(state.loadout.reduce((s,e) => s + (e.weapon[key]||0), 0) / state.loadout.length);
+  const r = avg('range'), d = avg('dmg'), m = avg('mob'), a = avg('acc');
+  [['range',r],['dmg',d],['mob',m],['acc',a]].forEach(([k,v]) => {
     document.getElementById('bar-'+k).style.width = v + '%';
     document.getElementById('bar-'+k+'-val').textContent = v;
   });
@@ -2329,62 +2187,48 @@ let spCurrentRow = null;
 
 const CAT_LABELS = {AR:'Assault Rifle',SMG:'Submachine Gun',SHG:'Shotgun',HG:'Pistol',SR:'Sniper Rifle',LMG:'Light Machine Gun',DMR:'Designated Marksman',PDW:'Personal Defense Weapon',MLW:'Melee'};
 const CAT_AMMO = {
-  AR: ['AP','LD','HV','FRG'],
-  SMG: ['SUB','JHP','+P','FRG'],
-  SHG: ['Pb','FRG','AP'],
-  HG: ['AP','JHP','+P','SUB'],
-  SR: ['AP','LD','HV'],
-  LMG: ['AP','LD','HV'],
-  DMR: ['AP','LD','HV','FRG'],
-  PDW: ['SUB','JHP','+P'],
-  MLW: [],
+  AR:['AP','LD','HV','FRG'], SMG:['SUB','JHP','+P','FRG'],
+  SHG:['Pb','FRG','AP'],     HG:['AP','JHP','+P','SUB'],
+  SR:['AP','LD','HV'],       LMG:['AP','LD','HV'],
+  DMR:['AP','LD','HV','FRG'],PDW:['SUB','JHP','+P'], MLW:[],
 };
 const CAT_SLOTS = {
-  AR:  ['Muzzle','Optic','Grip','Laser'],
-  SMG: ['Muzzle','Optic','Grip','Laser','Stock'],
-  SHG: ['Muzzle','Optic','Grip'],
-  HG:  ['Muzzle','Optic','Laser','Stock'],
-  SR:  ['Muzzle','Optic','Grip','Laser'],
-  LMG: ['Muzzle','Optic','Grip'],
-  DMR: ['Muzzle','Optic','Grip','Laser'],
-  PDW: ['Muzzle','Optic','Grip','Laser','Stock'],
-  MLW: [],
+  AR:['Muzzle','Optic','Grip','Laser'],
+  SMG:['Muzzle','Optic','Grip','Laser','Stock'],
+  SHG:['Muzzle','Optic','Grip'],
+  HG:['Muzzle','Optic','Laser','Stock'],
+  SR:['Muzzle','Optic','Grip','Laser'],
+  LMG:['Muzzle','Optic','Grip'],
+  DMR:['Muzzle','Optic','Grip','Laser'],
+  PDW:['Muzzle','Optic','Grip','Laser','Stock'],
+  MLW:[],
 };
 
 function openStatPreview(weapon, rowEl) {
   spCurrentWeapon = weapon;
-
-  // Highlight the row
   if (spCurrentRow) spCurrentRow.classList.remove('previewing');
   spCurrentRow = rowEl;
   rowEl.classList.add('previewing');
 
-  // Position the panel right of the left panel
   const leftPanel = document.querySelector('.panel-left');
   const rect = leftPanel.getBoundingClientRect();
   const panel = document.getElementById('statPreview');
   panel.style.left = (rect.right + 6) + 'px';
   panel.style.top = Math.max(72, rowEl.getBoundingClientRect().top - 20) + 'px';
-
-  // Clamp to viewport
   const vh = window.innerHeight;
-  const panelH = 520;
   const top = parseFloat(panel.style.top);
-  if (top + panelH > vh - 8) panel.style.top = (vh - panelH - 8) + 'px';
+  if (top + 520 > vh - 8) panel.style.top = (vh - 528) + 'px';
 
-  // Fill data
   const catLabel = CAT_LABELS[weapon.cat] || weapon.cat;
-  document.getElementById('spCat').innerHTML =
-    catLabel + (weapon.gamepass ? ' <span class="sp-gp-badge">GAMEPASS</span>' : '');
+  document.getElementById('spCat').innerHTML = catLabel + (weapon.gamepass ? ' <span class="sp-gp-badge">GAMEPASS</span>' : '');
   document.getElementById('spName').textContent = weapon.name;
-  document.getElementById('spCmd').innerHTML = 'CMD: <span>!' + 's ' + weapon.cmd + '</span>  ·  WT: <span>' + weapon.weight + '</span>';
+  document.getElementById('spCmd').innerHTML = 'CMD: <span>!s ' + weapon.cmd + '</span>  ·  WT: <span>' + weapon.weight + '</span>';
 
-  // Bars
   const bars = [
-    { label:'DAMAGE',      val: weapon.dmg,   cls:'spb-amber' },
-    { label:'RANGE',       val: weapon.range,  cls:'spb-blue'  },
-    { label:'MOBILITY',    val: weapon.mob,    cls:'spb-green' },
-    { label:'SUPPRESSION', val: weapon.sup,    cls:'spb-red'   },
+    { label:'DAMAGE',   val: weapon.dmg,   cls:'spb-amber' },
+    { label:'RANGE',    val: weapon.range,  cls:'spb-blue'  },
+    { label:'ACCURACY', val: weapon.acc,    cls:'spb-green' },
+    { label:'MOBILITY', val: weapon.mob,    cls:'spb-purple' },
   ];
   document.getElementById('spBars').innerHTML = bars.map(b => `
     <div class="sp-bar-row">
@@ -2397,58 +2241,35 @@ function openStatPreview(weapon, rowEl) {
       </div>
     </div>
   `).join('');
-  // Animate bars in next frame
   requestAnimationFrame(() => {
     document.querySelectorAll('#spBars .sp-bar-fill').forEach((el, i) => {
       el.style.width = bars[i].val + '%';
     });
   });
 
-  // Meta grid
-  const fireRate = weapon.cat === 'SR' ? 'Bolt/Semi' : weapon.cat === 'SHG' ? 'Pump/Semi' : weapon.cat === 'MLW' ? '—' : weapon.cat === 'LMG' ? 'Full-Auto' : weapon.cat === 'DMR' ? 'Semi-Auto' : 'Full-Auto';
+  const fireRate = {SR:'Bolt/Semi',SHG:'Pump/Semi',MLW:'—',LMG:'Full-Auto',DMR:'Semi-Auto'}[weapon.cat] || 'Full-Auto';
   document.getElementById('spMeta').innerHTML = `
-    <div class="sp-meta-cell">
-      <div class="sp-meta-cell-label">Weight</div>
-      <div class="sp-meta-cell-val">${weapon.weight}</div>
-    </div>
-    <div class="sp-meta-cell">
-      <div class="sp-meta-cell-label">Class</div>
-      <div class="sp-meta-cell-val" style="font-size:13px">${weapon.cat}</div>
-    </div>
-    <div class="sp-meta-cell">
-      <div class="sp-meta-cell-label">Fire Mode</div>
-      <div class="sp-meta-cell-val" style="font-size:12px">${fireRate}</div>
-    </div>
-    <div class="sp-meta-cell">
-      <div class="sp-meta-cell-label">Dmg Score</div>
-      <div class="sp-meta-cell-val" style="color:var(--accent)">${weapon.dmg}</div>
-    </div>
+    <div class="sp-meta-cell"><div class="sp-meta-cell-label">Weight</div><div class="sp-meta-cell-val">${weapon.weight}</div></div>
+    <div class="sp-meta-cell"><div class="sp-meta-cell-label">Class</div><div class="sp-meta-cell-val" style="font-size:13px">${weapon.cat}</div></div>
+    <div class="sp-meta-cell"><div class="sp-meta-cell-label">Fire Mode</div><div class="sp-meta-cell-val" style="font-size:12px">${fireRate}</div></div>
+    <div class="sp-meta-cell"><div class="sp-meta-cell-label">Damage</div><div class="sp-meta-cell-val" style="color:var(--accent)">${weapon.dmg}</div></div>
   `;
 
-  // Ammo types
   const ammos = CAT_AMMO[weapon.cat] || [];
   document.getElementById('spAmmo').innerHTML = ammos.length
     ? ammos.map(a => `<span class="sp-ammo-tag">${a}</span>`).join('')
     : '<span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">N/A</span>';
 
-  // Attachment slots
   const slots = CAT_SLOTS[weapon.cat] || [];
   document.getElementById('spAttSlots').innerHTML = slots.length
     ? slots.map(s => `<span class="sp-att-slot available">${s}</span>`).join('')
     : '<span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);">No attachments</span>';
 
-  // Add button state
   const btn = document.getElementById('spAddBtn');
   const alreadyIn = state.loadout.some(e => e.weapon.id === weapon.id);
-  if (alreadyIn) {
-    btn.textContent = '✓ IN LOADOUT';
-    btn.className = 'sp-add-btn already-added';
-    btn.disabled = false;
-  } else {
-    btn.textContent = '+ ADD TO LOADOUT';
-    btn.className = 'sp-add-btn';
-    btn.disabled = false;
-  }
+  btn.textContent = alreadyIn ? '✓ IN LOADOUT' : '+ ADD TO LOADOUT';
+  btn.className = 'sp-add-btn' + (alreadyIn ? ' already-added' : '');
+  btn.disabled = false;
 
   document.getElementById('spOverlay').classList.add('open');
 }
@@ -2458,7 +2279,6 @@ function spAddCurrent() {
   const alreadyIn = state.loadout.some(e => e.weapon.id === spCurrentWeapon.id);
   if (alreadyIn) { closeStatPreview(); return; }
   addWeapon(spCurrentWeapon.id);
-  // Update button state
   const btn = document.getElementById('spAddBtn');
   btn.textContent = '✓ IN LOADOUT';
   btn.className = 'sp-add-btn already-added';
@@ -2486,7 +2306,6 @@ function renderAll() {
 renderAll();
 </script>
 
-<!-- Stat Preview Panel -->
 <div class="stat-preview-overlay" id="spOverlay" onclick="handleSpOverlayClick(event)">
   <div class="stat-preview" id="statPreview">
     <div class="sp-header">
