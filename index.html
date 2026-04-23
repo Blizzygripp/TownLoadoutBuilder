@@ -471,18 +471,41 @@
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
-    padding: 0 16px 10px;
+    padding: 0 16px 12px;
   }
   .att-chip {
     font-family: var(--font-mono);
     font-size: 10px;
     color: var(--text3);
     background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 2px 8px;
+    border: 1px solid var(--border2);
+    padding: 5px 10px 5px 10px;
     border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+    position: relative;
   }
-  .att-chip.has-value { color: var(--accent2); border-color: rgba(232,160,32,0.3); }
+  .att-chip::after {
+    content: '▾';
+    font-size: 11px;
+    color: var(--text3);
+    transition: color 0.15s;
+  }
+  .att-chip:hover {
+    background: var(--panel2);
+    border-color: var(--accent);
+    color: var(--text2);
+  }
+  .att-chip:hover::after { color: var(--accent); }
+  .att-chip.has-value {
+    color: var(--accent2);
+    border-color: rgba(232,160,32,0.5);
+    background: var(--accent-dim);
+  }
+  .att-chip.has-value::after { color: var(--accent); }
 
   /* Attachment panel (CoD style) */
   .lwc-attachments {
@@ -1581,9 +1604,10 @@ function renderLoadout() {
     const slotLabel = (entry.slot || 'primary').toUpperCase();
 
     // Build attachment chips
+    const chipLabels = {muzzle:'MUZZLE', optic:'OPTIC', grip:'GRIP', laser:'LASER', stock:'STOCK'};
     const chipHtml = ['muzzle','optic','grip','laser','stock'].map(k => {
       const v = atts[k];
-      return `<span class="att-chip ${v ? 'has-value' : ''}">${v ? getAttName(k,v) : k.toUpperCase()}</span>`;
+      return `<span class="att-chip ${v ? 'has-value' : ''}" onclick="openModal(${idx},'${k}'); event.stopPropagation();">${v ? getAttName(k,v) : chipLabels[k]}</span>`;
     }).join('');
 
     // Build attachment slots in expanded view
