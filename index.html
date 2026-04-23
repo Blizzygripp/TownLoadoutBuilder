@@ -1286,7 +1286,7 @@
       = Gamepass Required
     </div>
     <button class="btn-clear" onclick="clearAll()">✕ CLEAR</button>
-    <button class="btn-export" onclick="copyMainCommand()">⬇ COPY !STS</button>
+    <button class="btn-export" onclick="copyMainCommand()">⬇ COPY !SETSPAWN</button>
   </div>
 </header>
 
@@ -1349,7 +1349,13 @@
       <div class="cmd-box" id="cmdBox">
         <span style="color:var(--text3);font-style:italic;">// Add weapons to generate command</span>
       </div>
-      <button class="copy-btn" id="copyBtn" onclick="copyMainCommand()">📋 COPY TO CLIPBOARD</button>
+      <button class="copy-btn" id="copyBtn" onclick="copyMainCommand()">📋 COPY !SETSPAWN</button>
+
+      <div class="cmd-label" style="margin-top:12px;">!SETSPAWNARMOR COMMAND</div>
+      <div class="cmd-box" id="armorCmdBox">
+        <span style="color:var(--text3);font-style:italic;">// Select armor to generate</span>
+      </div>
+      <button class="copy-btn" id="copyArmorBtn" onclick="copyArmorCommand()">📋 COPY !STA</button>
 
       <div class="cmd-label">LOADOUT SUMMARY</div>
       <div class="stats-panel" id="summaryPanel">
@@ -1601,7 +1607,7 @@ const ARMOR_LIST = [
   { id:'ballisticsh', name:'Ballistics Helmet', cmd:'ballisticsh', emoji:'⛑️', head:50, body:0, flavor:'Best head protection, but coverage is front-only.' },
   { id:'ballisticsv', name:'Ballistics Vest', cmd:'ballisticsv', emoji:'🦺', head:0, body:65, flavor:'Superior torso protection, standard issue.' },
   { id:'rusky', name:'Rusky Armor', cmd:'Rusky', emoji:'🪖', head:100, body:50, flavor:'Gamepass. Helmet with insane 100HP head armor.', gamepass:true },
-  { id:'heavy', name:'Heavy Armor', cmd:'Heavy', emoji:'🛡️', head:70, body:80, flavor:'Best combined protection. Significantly reduces mobility.' },
+  { id:'heavy', name:'Heavy Armor', cmd:'Heavy', emoji:'🛡️', head:70, body:80, flavor:'Best combined protection. Significantly reduces mobility.', gamepass:true },
   { id:'swat', name:'SWAT', cmd:'SWAT', emoji:'👮', head:30, body:50, flavor:'Law enforcement tactical armor. Standard stats.' },
   { id:'britan', name:'Britan', cmd:'Britan', emoji:'🪖', head:30, body:50, flavor:'WWI-era British military uniform.' },
   { id:'com', name:'COM', cmd:'COM', emoji:'👕', head:30, body:50, flavor:'Standard military fatigues.' },
@@ -1618,6 +1624,11 @@ const ARMOR_LIST = [
   { id:'slav', name:'Slav', cmd:'Slav', emoji:'🪖', head:30, body:50, flavor:'Black tactical suit and hat.' },
   { id:'tenor', name:'Tenor', cmd:'Tenor', emoji:'👗', head:30, body:50, flavor:'Blue-black dress armor, unique aesthetic.' },
   { id:'vdv', name:'VDV', cmd:'VDV', emoji:'🪖', head:30, body:50, flavor:'Russian Airborne Forces uniform.' },
+  { id:'bear', name:'BEAR', cmd:'BEAR', emoji:'🪖', head:30, body:50, flavor:'BEAR tactical operator uniform.' },
+  { id:'emrflora', name:'EMR Flora', cmd:'EMR Flora', emoji:'🌿', head:30, body:50, flavor:'Russian EMR Flora camouflage pattern.' },
+  { id:'gladiator', name:'Gladiator', cmd:'Gladiator', emoji:'⚔️', head:30, body:50, flavor:'Gladiator-style combat armor.' },
+  { id:'newsteel', name:'New Steel', cmd:'New Steel', emoji:'🛡️', head:30, body:50, flavor:'Modern steel-plated armor.' },
+  { id:'un', name:'UN', cmd:'UN', emoji:'🔵', head:30, body:50, flavor:'United Nations peacekeeping uniform.' },
 ];
 
 const ITEMS_LIST = [
@@ -1888,10 +1899,7 @@ function buildWeaponCmd(entry) {
 function updateCommand() {
   const parts = [];
   state.loadout.forEach(e => parts.push(buildWeaponCmd(e)));
-  state.armor.forEach(id => {
-    const a = ARMOR_LIST.find(x => x.id === id);
-    if (a) parts.push(a.cmd);
-  });
+  // Items go in !setspawn, armor goes in separate !sta command
   state.items.forEach(id => {
     const it = ITEMS_LIST.find(x => x.id === id);
     if (it) parts.push(it.cmd);
@@ -1900,14 +1908,25 @@ function updateCommand() {
   const el = document.getElementById('cmdBox');
   if (!parts.length) {
     el.innerHTML = '<span style="color:var(--text3);font-style:italic;">// Add weapons to generate command</span>';
-    return;
+  } else {
+    el.innerHTML = `<span class="keyword">!setspawn</span> ` + parts.map(p => {
+      const chunks = p.split('+');
+      return '<span class="weapon">' + chunks[0] + '</span>' +
+             (chunks.length > 1 ? '<span style="color:var(--text3)">+</span><span class="att">' + chunks.slice(1).join('+</span><span style="color:var(--text3)">+</span><span class="att">') + '</span>' : '');
+    }).join(' ');
   }
 
-  el.innerHTML = `<span class="keyword">!setspawn</span> ` + parts.map(p => {
-    const chunks = p.split('+');
-    return '<span class="weapon">' + chunks[0] + '</span>' + 
-           (chunks.length > 1 ? '<span style="color:var(--text3)">+</span><span class="att">' + chunks.slice(1).join('+</span><span style="color:var(--text3)">+</span><span class="att">') + '</span>' : '');
-  }).join(' ');
+  // Armor command — separate !sta
+  const armorEl = document.getElementById('armorCmdBox');
+  if (state.armor.length) {
+    const armorParts = state.armor.map(id => {
+      const a = ARMOR_LIST.find(x => x.id === id);
+      return a ? `<span class="weapon">${a.cmd}</span>` : '';
+    }).filter(Boolean);
+    armorEl.innerHTML = `<span class="keyword">!sta</span> ` + armorParts.join(' ');
+  } else {
+    armorEl.innerHTML = '<span style="color:var(--text3);font-style:italic;">// Select armor to generate</span>';
+  }
 
   // Update summary
   const totalW = state.loadout.reduce((s, e) => s + calcEntryWeight(e), 0);
@@ -2040,9 +2059,22 @@ function copyMainCommand() {
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.getElementById('copyBtn');
     btn.classList.add('copied');
-    btn.textContent = '✓ COPIED TO CLIPBOARD';
-    showToast('COMMAND COPIED!');
-    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋 COPY TO CLIPBOARD'; }, 2000);
+    btn.textContent = '✓ COPIED!';
+    showToast('!SETSPAWN COPIED!');
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋 COPY !SETSPAWN'; }, 2000);
+  });
+}
+
+function copyArmorCommand() {
+  const el = document.getElementById('armorCmdBox');
+  const text = el.textContent.trim();
+  if (!text || text.startsWith('//')) { showToast('NO ARMOR SELECTED'); return; }
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyArmorBtn');
+    btn.classList.add('copied');
+    btn.textContent = '✓ COPIED!';
+    showToast('!STA COPIED!');
+    setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋 COPY !STA'; }, 2000);
   });
 }
 
